@@ -1,7 +1,6 @@
 package com.techelevator.view;
 
 import java.math.BigDecimal;
-import java.net.BindException;
 import java.util.Scanner;
 
 public class MenuDrivenCLI implements BasicUI{
@@ -32,6 +31,10 @@ public class MenuDrivenCLI implements BasicUI{
         return new BigDecimal(userInput.nextLine());
 
 
+    }
+
+    public String promptForString() {
+        return new String(userInput.nextLine());
     }
 
 }

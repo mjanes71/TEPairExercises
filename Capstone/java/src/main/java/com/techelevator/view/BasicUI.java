@@ -11,4 +11,6 @@ public interface BasicUI {
     BigDecimal promptForBigDecimal();
 
     String promptForSelection(String[] options);
+
+    String promptForString();
 }

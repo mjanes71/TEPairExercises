@@ -59,7 +59,10 @@ public class Application {
 				feedMoney();
 				handlePurchaseMenu();
 			} else if (selection.equals(SUBMENU_OPTIONS_SELECT_PRODUCT)) {
-				//language to handle purchasing an object
+				ui.output(myMachine.infoForPurchases());
+				ui.output("Please enter code of item you would like to purchase: ");
+				String itemCode = ui.promptForString();
+				ui.output(myMachine.purchase(itemCode));
 				handlePurchaseMenu();
 			} else if (selection.equals(SUBMENU_OPTIONS_FINISH_TRANSACTION)) {
 				//language to display change and update current balance to zero

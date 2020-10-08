@@ -1,6 +1,6 @@
 package com.techelevator.Machine;
 
-import java.awt.event.ItemEvent;
+
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.file.Path;
@@ -19,7 +19,7 @@ public class Inventory {
                 String line = reader.nextLine();
                 String[] itemInfo = line.split("\\|");
                 Item myItem = new Item(itemInfo[0], itemInfo[1], new BigDecimal(itemInfo[2]), itemInfo[3]);
-                inventory.put(itemInfo[1], myItem);
+                inventory.put(itemInfo[0], myItem);
 
             }
 
@@ -32,9 +32,30 @@ public class Inventory {
 
         String inventoryUpdate = "";
         for (Map.Entry<String, Item> map : inventory.entrySet()) {
-            inventoryUpdate += map.getValue().getItemCode() + " | " + map.getKey() + " | " + map.getValue().getPrice() + "\n";
+            if(map.getValue().getQuantity() == 0){
+                inventoryUpdate += map.getKey() + " | " + "SOLD OUT" + "\n";
+            }else {
+                inventoryUpdate +=map.getKey() + " | " + map.getValue().getName() + " | " + map.getValue().getPrice() + "\n";
+            }
         }
         return inventoryUpdate;
+    }
+    public BigDecimal getAPrice(String itemCode){
+         Item itemToFind = inventory.get(itemCode);
+         return itemToFind.getPriceAsDecimal();
+    }
+
+    public void setQuantity(String itemCode){
+        Item itemToUpdate = inventory.get(itemCode);
+        itemToUpdate.setQuantity(itemToUpdate.getQuantity()-1);
+    }
+
+    public boolean itemSoldOut(String itemCode){
+        Item itemToCheck = inventory.get(itemCode);
+        if(itemToCheck.getQuantity() == 0){
+            return true;
+        }
+        return false;
     }
 
     }

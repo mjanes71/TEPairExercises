@@ -27,6 +27,22 @@ public class Item {
         return price.toString();
     }
 
+    public BigDecimal getPriceAsDecimal(){
+        return price;
+    }
+
+    public int getQuantity(){
+        return quantity;
+    }
+
+    public void setQuantity(int quantity){
+        this.quantity = quantity;
+    }
+
+    public String getName(){
+        return name;
+    }
+
 
 
 
