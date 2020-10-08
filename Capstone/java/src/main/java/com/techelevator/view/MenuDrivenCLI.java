@@ -1,11 +1,14 @@
 package com.techelevator.view;
 
+import java.math.BigDecimal;
+import java.net.BindException;
 import java.util.Scanner;
 
 public class MenuDrivenCLI implements BasicUI{
 
     private final Scanner userInput = new Scanner(System.in);
     private final Menu menu = new Menu(System.in, System.out);
+
 
     @Override
     public void output(String content) {
@@ -23,4 +26,12 @@ public class MenuDrivenCLI implements BasicUI{
     public String promptForSelection(String[] options) {
         return (String) menu.getChoiceFromOptions(options);
     }
+
+
+    public BigDecimal promptForBigDecimal(){
+        return new BigDecimal(userInput.nextLine());
+
+
+    }
+
 }
