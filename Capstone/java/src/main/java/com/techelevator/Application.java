@@ -6,6 +6,7 @@ import com.techelevator.view.BasicUI;
 import com.techelevator.view.MenuDrivenCLI;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class Application {
 
@@ -49,27 +50,30 @@ public class Application {
 			}else if (selection.equals(MAIN_MENU_OPTION_EXIT)){
 				finished = true;
 			}
+
 		}
 	}
 
 	//vending machine purchase menu
 	private void handlePurchaseMenu(){
 		String selection = ui.promptForSelection(SUBMENU_OPTIONS);
-		boolean finished =false;
+		boolean done =false;
 
-		while (!finished) {
+		while (!done) {
 			if (selection.equals(SUBMENU_OPTIONS_FEED_MONEY)) {
 				feedMoney();
-				handlePurchaseMenu();
+				selection = ui.promptForSelection(SUBMENU_OPTIONS);
 			} else if (selection.equals(SUBMENU_OPTIONS_SELECT_PRODUCT)) {
 				ui.output(myMachine.infoForPurchases());
 				ui.output("Please enter code of item you would like to purchase: ");
 				String itemCode = ui.promptForString();
 				ui.output(myMachine.purchase(itemCode));
-				handlePurchaseMenu();
+				selection = ui.promptForSelection(SUBMENU_OPTIONS);
 			} else if (selection.equals(SUBMENU_OPTIONS_FINISH_TRANSACTION)) {
 				//language to display change and update current balance to zero
-				finished = true;
+				ui.output(myMachine.giveChange());
+				done = true;
+
 			}
 		}
 	}
@@ -78,9 +82,11 @@ public class Application {
 	private void feedMoney() {
 		ui.output("Please enter a whole dollar value to deposit.");
 		BigDecimal amount = ui.promptForBigDecimal();
+		BigDecimal amountReFormatted = amount.add(new BigDecimal("0.00")); //for formatting
 		try {
 			myMachine.getMyCashBox().deposit(amount);
-			ui.output(myMachine.getMyCashBox().getCustomerBalance().toString());
+			myMachine.getMySalesReports().addToTransactionLog(" FEED MONEY: $" + amountReFormatted + " $" + myMachine.getMyCashBox().getCustomerBalance());
+			ui.output("Your balance is: $" + myMachine.getMyCashBox().getCustomerBalance().toString());
 		} catch (NotAWholeDollarAmountException e) {
 			ui.output("Not a whole dollar amount. Please try again.");
 		}

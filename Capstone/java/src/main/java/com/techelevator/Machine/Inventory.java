@@ -33,6 +33,7 @@ public class Inventory {
         return inventory.get(itemCode);
     }
 
+
     //create inventory map from a formatted txt file
     public void createInventory(String inventoryFile){
         Path myFile = Paths.get(inventoryFile);
