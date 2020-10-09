@@ -10,8 +10,30 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class Inventory {
+
+    //inventory map: key is the item code, value is the item object
     private Map<String, Item> inventory = new HashMap<>();
 
+    //getters, setters, and helper methods
+    public BigDecimal getAPrice(String itemCode){
+         Item itemToFind = inventory.get(itemCode);
+         return itemToFind.getPriceAsDecimal();
+    }
+
+    public void setQuantity(String itemCode){
+        Item itemToUpdate = inventory.get(itemCode);
+        itemToUpdate.setQuantity(itemToUpdate.getQuantity()-1);
+    }
+
+    public boolean checkForItemCode(String itemCode){
+        return inventory.containsKey(itemCode);
+    }
+
+    public Item getItem(String itemCode){
+        return inventory.get(itemCode);
+    }
+
+    //create inventory map from a formatted txt file
     public void createInventory(String inventoryFile){
         Path myFile = Paths.get(inventoryFile);
         try(Scanner reader = new Scanner(myFile)){
@@ -20,14 +42,13 @@ public class Inventory {
                 String[] itemInfo = line.split("\\|");
                 Item myItem = new Item(itemInfo[0], itemInfo[1], new BigDecimal(itemInfo[2]), itemInfo[3]);
                 inventory.put(itemInfo[0], myItem);
-
             }
-
         }catch (IOException e){
             System.out.println("File not found");
         }
     }
 
+    //displays inventory at purchase menu
     public String displayInventory() {
 
         String inventoryUpdate = "";
@@ -40,25 +61,14 @@ public class Inventory {
         }
         return inventoryUpdate;
     }
-    public BigDecimal getAPrice(String itemCode){
-         Item itemToFind = inventory.get(itemCode);
-         return itemToFind.getPriceAsDecimal();
-    }
 
-    public void setQuantity(String itemCode){
-        Item itemToUpdate = inventory.get(itemCode);
-        itemToUpdate.setQuantity(itemToUpdate.getQuantity()-1);
-    }
-
+    //item sold out - used in display inventory
     public boolean itemSoldOut(String itemCode){
         Item itemToCheck = inventory.get(itemCode);
-        if(itemToCheck.getQuantity() == 0){
-            return true;
-        }
-        return false;
+        return itemToCheck.getQuantity() == 0;
     }
 
-    }
+}
 
 
 
@@ -67,24 +77,3 @@ public class Inventory {
 
 
 
-//? Would it make sense to create and item class that stores all the info and then store the item name in a map as a key, and the value to the the item object? (similar to project managment software)
-//method to access the items (name, quantity available, possibly cost?) - map?
-
-//sold out
-
-//
-
-//private static final int STARTING_QUANTITY = 5;
-//private Map<String,Integer> inventory = new HashMap<>();
-//private Path inventoryFile;
-//
-//public Inventory(String filePath){
-//    inventoryFile = Paths.get(filePath);
-//}
-//
-//public Map<String, Integer> getInventory(){
-//    try(Scanner reader = new Scanner(inventoryFile)){
-//}catch (IOException e){
-//
-//    }
-//    }

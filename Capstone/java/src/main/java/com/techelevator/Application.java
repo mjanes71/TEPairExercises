@@ -20,6 +20,7 @@ public class Application {
 	private static final String SUBMENU_OPTIONS_FINISH_TRANSACTION = "Finish Transaction";
 	private static final String[] SUBMENU_OPTIONS = {SUBMENU_OPTIONS_FEED_MONEY, SUBMENU_OPTIONS_SELECT_PRODUCT, SUBMENU_OPTIONS_FINISH_TRANSACTION};
 
+	// our instance of vending machine
 	private VendingMachine myMachine = new VendingMachine();
 
 	private final BasicUI ui;
@@ -34,6 +35,7 @@ public class Application {
 		application.run();
 	}
 
+	//vendng machine main menu
 	public void run() {
 		boolean finished = false;
 		while (!finished) {
@@ -50,6 +52,7 @@ public class Application {
 		}
 	}
 
+	//vending machine purchase menu
 	private void handlePurchaseMenu(){
 		String selection = ui.promptForSelection(SUBMENU_OPTIONS);
 		boolean finished =false;
@@ -71,12 +74,13 @@ public class Application {
 		}
 	}
 
+	//vending machine deposit helper method - connects to cashbox
 	private void feedMoney() {
 		ui.output("Please enter a whole dollar value to deposit.");
 		BigDecimal amount = ui.promptForBigDecimal();
 		try {
-			myMachine.getMoneyHolder().deposit(amount);
-			ui.output(myMachine.getMoneyHolder().getCustomerBalance().toString());
+			myMachine.getMyCashBox().deposit(amount);
+			ui.output(myMachine.getMyCashBox().getCustomerBalance().toString());
 		} catch (NotAWholeDollarAmountException e) {
 			ui.output("Not a whole dollar amount. Please try again.");
 		}

@@ -6,11 +6,11 @@ import java.math.BigDecimal;
 
 public class CashBox {
 
-    //method to display balance
+    //contains customer balance during purchase transaction
 
     private BigDecimal customerBalance = new BigDecimal("0.00");
 
-
+    // getters, setters
     public BigDecimal getCustomerBalance(){
         return customerBalance;
     }
@@ -19,6 +19,7 @@ public class CashBox {
         this.customerBalance = customerBalance;
     }
 
+    //deposit method used in purchase menu
     public void deposit(BigDecimal moneyIn) throws NotAWholeDollarAmountException{
 
         BigDecimal is10 = new BigDecimal("10.00");
