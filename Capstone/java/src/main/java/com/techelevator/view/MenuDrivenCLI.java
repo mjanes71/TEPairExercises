@@ -3,7 +3,7 @@ package com.techelevator.view;
 import java.math.BigDecimal;
 import java.util.Scanner;
 
-public class MenuDrivenCLI implements BasicUI{
+public class MenuDrivenCLI implements BasicUI {
 
     private final Scanner userInput = new Scanner(System.in);
     private final Menu menu = new Menu(System.in, System.out);
@@ -26,15 +26,13 @@ public class MenuDrivenCLI implements BasicUI{
         return (String) menu.getChoiceFromOptions(options);
     }
 
-
-    public BigDecimal promptForBigDecimal(){
+    //get deposit amount from user
+    public BigDecimal promptForBigDecimal() {
         return new BigDecimal(userInput.nextLine());
-
-
     }
 
+    //get item code from user
     public String promptForString() {
         return new String(userInput.nextLine());
     }
-
 }

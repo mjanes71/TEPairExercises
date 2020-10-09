@@ -14,53 +14,49 @@ public class Item {
     private String sound;
 
     //constructor
-    public Item(String itemCode, String name, BigDecimal price, String foodType){
+    public Item(String itemCode, String name, BigDecimal price, String foodType) {
         this.itemCode = itemCode;
         this.name = name;
         this.price = price;
         this.foodType = foodType;
         this.quantity = DEFAULT_QUANTITY;
-        if(foodType.equals("Chips")){
+        if (foodType.equals("Chips")) {
             sound = "Crunch Crunch, Yum!";
-        }else if (foodType.equals("Candy")){
+        } else if (foodType.equals("Candy")) {
             sound = "Munch Munch, Yum!";
-        }else if (foodType.equals("Drink")){
+        } else if (foodType.equals("Drink")) {
             sound = "Glug Glug, Yum!";
-        }else {
+        } else {
             sound = "Chew Chew, Yum!";
         }
     }
 
     //getters, setters
-    public String getItemCode(){
+    public String getItemCode() {
         return itemCode;
     }
 
-    public String getPrice(){
+    public String getPrice() {
         return price.toString();
     }
 
-    public BigDecimal getPriceAsDecimal(){
+    public BigDecimal getPriceAsDecimal() {
         return price;
     }
 
-    public int getQuantity(){
+    public int getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity){
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 
-    public String getName(){
+    public String getName() {
         return name;
     }
 
-    public String getSound(){
+    public String getSound() {
         return sound;
     }
-
-
-
-
 }
