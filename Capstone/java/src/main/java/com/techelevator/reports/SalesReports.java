@@ -37,9 +37,12 @@ public class SalesReports {
 
     //add a transaction to the audit log
     public void addToTransactionLog(String transactionDescription) {
-        try (FileOutputStream stream = new FileOutputStream("log.txt", true);
-             PrintWriter writer = new PrintWriter(stream)) {
+        try{
+            FileOutputStream stream = new FileOutputStream("log.txt", true);
+            PrintWriter writer = new PrintWriter(stream);
             writer.println(getTimeStamp() + transactionDescription);
+            writer.flush();
+            writer.close();
         } catch (IOException e) {
             System.out.println("Could not find file. Try again.");
         }
