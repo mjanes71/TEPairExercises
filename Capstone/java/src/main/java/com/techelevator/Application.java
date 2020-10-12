@@ -83,7 +83,7 @@ public class Application {
         ui.output("Please enter a whole dollar value to deposit.");
         try {
             BigDecimal amount = ui.promptForBigDecimal();
-            BigDecimal amountReFormatted = amount.add(new BigDecimal("0.00")); //for formatting
+            BigDecimal amountReFormatted = amount.setScale(2, RoundingMode.CEILING); //for formatting
             try {
                 myMachine.getMyCashBox().deposit(amount);
                 myMachine.getMySalesReports().addToTransactionLog(" FEED MONEY: $" + amountReFormatted + " $" + myMachine.getMyCashBox().getCustomerBalance());
