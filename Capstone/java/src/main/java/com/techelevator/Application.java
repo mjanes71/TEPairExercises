@@ -77,7 +77,7 @@ public class Application {
             }
         }
     }
-
+    //make sure to handle if someone tries to deposit a neg amount
     //vending machine deposit helper method - connects to cashbox
     private void feedMoney() {
         ui.output("Please enter a whole dollar value to deposit.");
