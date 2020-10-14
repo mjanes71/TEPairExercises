@@ -1,15 +1,22 @@
 package com.techelevator.Machine;
 
+import com.techelevator.Exceptions.NotAWholeDollarAmountException;
 import com.techelevator.reports.SalesReports;
+import com.techelevator.view.BasicUI;
+import com.techelevator.view.MenuDrivenCLI;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 public class VendingMachine {
 
+    private final BasicUI myUI = new MenuDrivenCLI();
+
     //vending machine has instances of cashbox, salesreport and inventory
     private CashBox myCashBox = new CashBox();
     private static Inventory myInventory = new Inventory();
     private SalesReports mySalesReports = new SalesReports();
+
 
     //constructor
     public VendingMachine() {
@@ -37,6 +44,25 @@ public class VendingMachine {
         return myInventory;
     }
 
+    //make sure to handle if someone tries to deposit a neg amount
+    //vending machine deposit helper method - connects to cashbox
+    public void feedMoney() {
+        myUI.output("Please enter a whole dollar value to deposit.");
+        try {
+            BigDecimal amount = myUI.promptForBigDecimal();
+            BigDecimal amountReFormatted = amount.setScale(2, RoundingMode.CEILING); //for formatting
+            try {
+                getMyCashBox().deposit(amount);
+                getMySalesReports().addToTransactionLog(" FEED MONEY: $" + amountReFormatted + " $" + getMyCashBox().getCustomerBalance());
+                myUI.output("Your balance is: $" + getMyCashBox().getCustomerBalance().toString());
+            } catch (NotAWholeDollarAmountException e) {
+                myUI.output("Not a whole dollar amount. Please try again.");
+            }
+        } catch (NumberFormatException n) {
+            myUI.output("Not a dollar amount. Please try again.");
+        }
+    }
+
     //purchase method used by purchase menu
     public String purchase(String itemCode) {
         BigDecimal another0 = new BigDecimal("0.00");
@@ -59,26 +85,9 @@ public class VendingMachine {
 
     //set customer balance to zero and say "returned ___ change"
     public String giveChange() {
-        String change = "Your change is " + myCashBox.getCustomerBalance() + "\n" + "Which is " + makeChange(myCashBox.getCustomerBalance());
+        String change = "Your change is " + myCashBox.getCustomerBalance() + "\n" + "Which is " + myCashBox.makeChange(myCashBox.getCustomerBalance());
         mySalesReports.addToTransactionLog(" GIVE CHANGE: $" + myCashBox.getCustomerBalance() + " " + "$0.00" + "\n");
         myCashBox.setCustomerBalance(new BigDecimal("0.00"));
         return change;
-    }
-
-    //calculate how to make change out of quarters, dimes, and nickels
-    public String makeChange(BigDecimal customerChange) {
-        BigDecimal total = customerChange;
-        BigDecimal quarters = new BigDecimal("0");
-        BigDecimal dimes = new BigDecimal("0");
-        BigDecimal nickels = new BigDecimal("0");
-
-        quarters = total.divide(new BigDecimal("0.25")).setScale(0, RoundingMode.DOWN);
-        total = total.subtract(quarters.multiply(new BigDecimal("0.25")));
-
-        dimes = total.divide(new BigDecimal("0.10")).setScale(0, RoundingMode.DOWN);
-        total = total.subtract(dimes.multiply(new BigDecimal("0.10")));
-        nickels = total.divide(new BigDecimal("0.05")).setScale(0, RoundingMode.DOWN);
-
-        return quarters + " Quarter(s), " + dimes + " Dime(s), and " + nickels + " Nickel(s).";
     }
 }

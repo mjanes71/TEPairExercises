@@ -2,7 +2,7 @@ package com.techelevator.Machine;
 
 import java.math.BigDecimal;
 
-public abstract class Item implements Audible {
+public abstract class Item {
     //constant used in constructor
     private static final int DEFAULT_QUANTITY = 5;
 
@@ -42,7 +42,6 @@ public abstract class Item implements Audible {
         return name;
     }
 
-    @Override
     public String makeSound(){
      return "Default Sound";
     }

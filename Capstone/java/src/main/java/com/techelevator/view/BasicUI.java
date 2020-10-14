@@ -10,7 +10,7 @@ public interface BasicUI {
 
     BigDecimal promptForBigDecimal();
 
-    String promptForSelection(String[] options);
+    String promptForSelection(String[] options, boolean hideOption4);
 
     String promptForString();
 }

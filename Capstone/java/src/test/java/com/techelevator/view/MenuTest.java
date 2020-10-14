@@ -21,7 +21,8 @@ public class MenuTest {
 		Object[] options = new Object[] {3, "Blind", "Mice" };
 		Menu menu = getMenuForTesting();
 
-		menu.getChoiceFromOptions(options);
+		menu.getChoiceFromOptions(options, false
+		);
 
 		String expected = "\r\n" + "1) " + options[0].toString() + "\r\n" + "2) " + options[1].toString() + "\r\n" + "3) "
 				+ options[2].toString() + "\r\n\n" + "Please choose an option >>> ";
@@ -34,7 +35,7 @@ public class MenuTest {
 		Integer[] options = new Integer[] {123, expected, 789};
 		Menu menu = getMenuForTestingWithUserInput("2\n");
 
-		Integer result = (Integer) menu.getChoiceFromOptions(options);
+		Integer result = (Integer) menu.getChoiceFromOptions(options, false);
 
 		Assert.assertEquals(expected, result);
 	}
@@ -44,7 +45,7 @@ public class MenuTest {
 		Object[] options = new Object[] { "Larry", "Curly", "Moe" };
 		Menu menu = getMenuForTestingWithUserInput("4\n1\n");
 
-		menu.getChoiceFromOptions(options);
+		menu.getChoiceFromOptions(options, false);
 
 		String menuDisplay = "\r\n" + "1) " + options[0].toString() + "\r\n" + "2) " + options[1].toString() + "\r\n" + "3) "
 				+ options[2].toString() + "\r\n\n" + "Please choose an option >>> ";
@@ -58,7 +59,7 @@ public class MenuTest {
 		Object[] options = new Object[] { "Larry", "Curly", "Moe" };
 		Menu menu = getMenuForTestingWithUserInput("0\n1\n");
 
-		menu.getChoiceFromOptions(options);
+		menu.getChoiceFromOptions(options, false);
 
 		String menuDisplay = "\r\n" + "1) " + options[0].toString() + "\r\n" + "2) " + options[1].toString() + "\r\n" + "3) "
 				+ options[2].toString() + "\r\n\n" + "Please choose an option >>> ";
@@ -73,7 +74,7 @@ public class MenuTest {
 		Object[] options = new Object[] { "Larry", "Curly", "Moe" };
 		Menu menu = getMenuForTestingWithUserInput("Mickey Mouse\n1\n");
 
-		menu.getChoiceFromOptions(options);
+		menu.getChoiceFromOptions(options, false);
 
 		String menuDisplay = "\r\n" + "1) " + options[0].toString() + "\r\n" + "2) " + options[1].toString() + "\r\n" + "3) "
 				+ options[2].toString() + "\r\n\n" + "Please choose an option >>> ";

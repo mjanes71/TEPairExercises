@@ -22,8 +22,8 @@ public class MenuDrivenCLI implements BasicUI {
     }
 
     @Override
-    public String promptForSelection(String[] options) {
-        return (String) menu.getChoiceFromOptions(options);
+    public String promptForSelection(String[] options, boolean hideOption4) {
+        return (String) menu.getChoiceFromOptions(options, hideOption4);
     }
 
     //get deposit amount from user

@@ -40,11 +40,10 @@ public class Application {
     public void run() {
         boolean finished = false;
         while (!finished) {
-            String selection = ui.promptForSelection(MAIN_MENU_OPTIONS);
+            String selection = ui.promptForSelection(MAIN_MENU_OPTIONS, true);
 
             if (selection.equals(MAIN_MENU_OPTION_DISPLAY_ITEMS)) {
                 ui.output(myMachine.infoForPurchases());
-                ui.pauseOutput();
             } else if (selection.equals(MAIN_MENU_OPTION_PURCHASE)) {
                 handlePurchaseMenu();
             } else if (selection.equals(MAIN_MENU_OPTION_EXIT)) {
@@ -57,19 +56,19 @@ public class Application {
 
     //vending machine purchase menu
     private void handlePurchaseMenu() {
-        String selection = ui.promptForSelection(SUBMENU_OPTIONS);
+        String selection = ui.promptForSelection(SUBMENU_OPTIONS, false);
         boolean done = false;
 
         while (!done) {
             if (selection.equals(SUBMENU_OPTIONS_FEED_MONEY)) {
-                feedMoney();
-                selection = ui.promptForSelection(SUBMENU_OPTIONS);
+                myMachine.feedMoney();
+                selection = ui.promptForSelection(SUBMENU_OPTIONS,false);
             } else if (selection.equals(SUBMENU_OPTIONS_SELECT_PRODUCT)) {
                 ui.output(myMachine.infoForPurchases());
                 ui.output("Please enter code of item you would like to purchase: ");
                 String itemCode = ui.promptForString();
                 ui.output(myMachine.purchase(itemCode));
-                selection = ui.promptForSelection(SUBMENU_OPTIONS);
+                selection = ui.promptForSelection(SUBMENU_OPTIONS, false);
             } else if (selection.equals(SUBMENU_OPTIONS_FINISH_TRANSACTION)) {
                 //language to display change and update current balance to zero
                 ui.output(myMachine.giveChange());
@@ -77,22 +76,5 @@ public class Application {
             }
         }
     }
-    //make sure to handle if someone tries to deposit a neg amount
-    //vending machine deposit helper method - connects to cashbox
-    private void feedMoney() {
-        ui.output("Please enter a whole dollar value to deposit.");
-        try {
-            BigDecimal amount = ui.promptForBigDecimal();
-            BigDecimal amountReFormatted = amount.setScale(2, RoundingMode.CEILING); //for formatting
-            try {
-                myMachine.getMyCashBox().deposit(amount);
-                myMachine.getMySalesReports().addToTransactionLog(" FEED MONEY: $" + amountReFormatted + " $" + myMachine.getMyCashBox().getCustomerBalance());
-                ui.output("Your balance is: $" + myMachine.getMyCashBox().getCustomerBalance().toString());
-            } catch (NotAWholeDollarAmountException e) {
-                ui.output("Not a whole dollar amount. Please try again.");
-            }
-        } catch (NumberFormatException n) {
-            ui.output("Not a dollar amount. Please try again.");
-        }
-    }
+
 }
