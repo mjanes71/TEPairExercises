@@ -54,7 +54,7 @@ public class VendingMachine {
             myInventory.setQuantity(itemCode);
             mySalesReports.setMachineTotalSales(myInventory.getAPrice(itemCode));
         }
-        return myInventory.getItem(itemCode).getSound() + "\n" + "You have " + myCashBox.getCustomerBalance() + " left to spend.";
+        return myInventory.getItem(itemCode).makeSound() + "\n" + "You have " + myCashBox.getCustomerBalance() + " left to spend.";
     }
 
     //set customer balance to zero and say "returned ___ change"

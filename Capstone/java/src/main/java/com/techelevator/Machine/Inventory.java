@@ -6,13 +6,14 @@ import java.math.BigDecimal;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;
 
 public class Inventory {
 
     //inventory map: key is the item code, value is the item object
-    private Map<String, Item> inventory = new HashMap<>();
+    private Map<String, Item> inventory = new LinkedHashMap<>();
 
     //getters, setters, and helper methods
     public BigDecimal getAPrice(String itemCode) {
@@ -40,8 +41,19 @@ public class Inventory {
             while (reader.hasNextLine()) {
                 String line = reader.nextLine();
                 String[] itemInfo = line.split("\\|");
-                Item myItem = new Item(itemInfo[0], itemInfo[1], new BigDecimal(itemInfo[2]), itemInfo[3]);
-                inventory.put(itemInfo[0], myItem);
+                if(itemInfo[3].equals("Chip")){
+                    Item myChip = new Chip(itemInfo[1], new BigDecimal(itemInfo[2]), itemInfo[3]);
+                    inventory.put(itemInfo[0], myChip);
+                }else if(itemInfo[3].equals("Candy")) {
+                    Item myCandy = new Candy(itemInfo[1], new BigDecimal(itemInfo[2]), itemInfo[3]);
+                    inventory.put(itemInfo[0], myCandy);
+                }else if(itemInfo[3].equals("Drink")) {
+                    Item myDrink = new Drink(itemInfo[1], new BigDecimal(itemInfo[2]), itemInfo[3]);
+                    inventory.put(itemInfo[0], myDrink);
+                }else if(itemInfo[3].equals("Gum")) {
+                    Item myGum = new Gum(itemInfo[1], new BigDecimal(itemInfo[2]), itemInfo[3]);
+                    inventory.put(itemInfo[0], myGum);
+                }
             }
         } catch (IOException e) {
             System.out.println("File not found");
